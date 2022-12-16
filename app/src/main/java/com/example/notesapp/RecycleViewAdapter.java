@@ -124,9 +124,17 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
             void onClick(View v) {
                 String Word = word.getText().toString();
                 String Meaning = meaning.getText().toString();
-                dataBaseHelper.notesDAO().updateNotes(new Notes(arrayNotes.get(pos).getId(),Word,Meaning));
-               ((MainActivity)context).showNotes();
-               dialog.dismiss();
+                if(TextUtils.isEmpty(Word)){
+                    word.setError("Title can't be empty");
+                }
+                else if (TextUtils.isEmpty(Meaning)){
+                    meaning.setError("Content can not be empty");
+                }
+                else {
+                    dataBaseHelper.notesDAO().updateNotes(new Notes(arrayNotes.get(pos).getId(), Word, Meaning));
+                    ((MainActivity) context).showNotes();
+                    dialog.dismiss();
+                }
             }
         });
         dialog.show();

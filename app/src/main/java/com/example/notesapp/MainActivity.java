@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -49,9 +51,23 @@ class MainActivity extends AppCompatActivity {
                     void onClick(View v) {
                         String word = wordl.getText().toString();
                         String meaning = meaningl.getText().toString();
-                        dataBaseHelper.notesDAO().addNotes(new Notes(word,meaning));
-                        showNotes();
-                        dialog.dismiss();
+                        if(word.equals("")){
+                            wordl.setError("Title can't be empty");
+                            Toast.makeText(MainActivity.this, "hii", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (TextUtils.isEmpty(meaning)){
+                            meaningl.setError("Content can not be empty");
+                        }
+                        else {
+
+
+                            Toast.makeText(MainActivity.this, "hi", Toast.LENGTH_SHORT).show();
+
+                            dataBaseHelper.notesDAO().addNotes(new Notes(word, meaning));
+                            showNotes();
+                            dialog.dismiss();
+                        }
+
 
                     }
                 });
