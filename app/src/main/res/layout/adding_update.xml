@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+   <LinearLayout
+       android:layout_width="350dp"
+       android:layout_height="250dp"
+       android:orientation="vertical"
+       >
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Adding Word"
+           android:id="@+id/add"
+           android:textSize="27dp"
+           android:padding="10dp"
+           />
+       <EditText
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/wordIP"
+           android:hint="Enter the word "
+           android:layout_marginLeft="20dp"
+           android:layout_marginTop="10dp"
+           android:inputType="textPersonName"
+           android:paddingRight="160dp"
+
+           />
+       <EditText
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/meaningIP"
+           android:hint="Enter the meaning"
+           android:inputType="textPersonName"
+           android:layout_marginTop="10dp"
+           android:paddingRight="160dp"
+           android:layout_marginLeft="20dp"
+           />
+       <Button
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="add"
+           android:id="@+id/addingBtn"
+           android:layout_gravity="end"
+           android:layout_marginTop="20dp"
+           android:layout_marginRight="20dp"
+           />
+   </LinearLayout>
+
+
+
+</LinearLayout>
