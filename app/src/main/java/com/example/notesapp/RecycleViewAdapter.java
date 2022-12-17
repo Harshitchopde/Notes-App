@@ -5,16 +5,20 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -44,8 +48,10 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
     public
     void onBindViewHolder(@NonNull RecycleViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // set text to the cotent to bind the data to the layout
-        holder.textWord.setText(arrayNotes.get(position).getWord());
-        holder.textMeaning.setText(arrayNotes.get(position).getMeaning());
+        String title = arrayNotes.get(position).getWord();
+        String detail = arrayNotes.get(position).getMeaning();
+        holder.textWord.setText(title);
+        holder.textMeaning.setText(detail);
         holder.llout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public
@@ -57,11 +63,32 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
 
 
         });
-        holder.llout.setOnClickListener(new View.OnClickListener() {
+        holder.textMeaning.setOnClickListener(new View.OnClickListener() {
             @Override
             public
             void onClick(View v) {
+                
                 update(position);
+            }
+        });
+//        holder.textWord.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public
+//            void onClick(View v) {
+//
+//                update(position);
+//            }
+//        });
+        holder.ishare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public
+            void onClick(View v) {
+//                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+                Intent ishared = new Intent(Intent.ACTION_SEND);
+                ishared.setType("text/plain")
+                        .putExtra(Intent.EXTRA_TEXT,""+title+"\n"+detail);
+                context.startActivity(Intent.createChooser(ishared,"Share to"));
+
             }
         });
     }
@@ -77,6 +104,7 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
         // what ever you want to show declear have to declear
         TextView textWord, textMeaning;
         LinearLayout llout;
+        AppCompatImageButton ishare;
 
         public
         ViewHolder(@NonNull View itemView) {
@@ -84,6 +112,8 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
             textWord = itemView.findViewById(R.id.wordid);
             textMeaning = itemView.findViewById(R.id.meaningid);
             llout = itemView.findViewById(R.id.llrow);
+            ishare = itemView.findViewById(R.id.shareBTN);
+
         }
     }
 
@@ -114,7 +144,6 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
         EditText word = dialog.findViewById(R.id.wordIP);
         EditText meaning = dialog.findViewById(R.id.meaningIP);
         word.setText(arrayNotes.get(pos).getWord());
-
         addUpdate.setText("Update text");
         meaning.setText(arrayNotes.get(pos).getMeaning());
         btn.setText("Update");

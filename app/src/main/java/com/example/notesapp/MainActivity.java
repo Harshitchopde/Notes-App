@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -59,7 +60,6 @@ class MainActivity extends AppCompatActivity {
                             meaningl.setError("Content can not be empty");
                         }
                         else {
-
 
                             Toast.makeText(MainActivity.this, "hi", Toast.LENGTH_SHORT).show();
 

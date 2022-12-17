@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/NotesApp/app/src/main/res/drawable/button_effect.xml" value="0.2345" />
+        <entry key="..\:/NotesApp/app/src/main/res/drawable/cicle.xml" value="0.2345" />
+        <entry key="..\:/NotesApp/app/src/main/res/drawable/gradient.xml" value="0.2345" />
         <entry key="..\:/NotesApp/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2385" />
+        <entry key="..\:/NotesApp/app/src/main/res/drawable/ic_baseline_error_outline_24.xml" value="0.2385" />
         <entry key="..\:/NotesApp/app/src/main/res/drawable/ic_dots.xml" value="0.2385" />
         <entry key="..\:/NotesApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2385" />
         <entry key="..\:/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.23229166666666667" />
         <entry key="..\:/NotesApp/app/src/main/res/layout/adding_update.xml" value="0.23229166666666667" />
-        <entry key="..\:/NotesApp/app/src/main/res/layout/notes_row.xml" value="0.23229166666666667" />
+        <entry key="..\:/NotesApp/app/src/main/res/layout/notes_row.xml" value="0.4" />
       </map>
     </option>
   </component>
