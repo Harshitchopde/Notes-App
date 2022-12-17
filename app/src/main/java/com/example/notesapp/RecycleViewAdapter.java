@@ -52,11 +52,12 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
         String detail = arrayNotes.get(position).getMeaning();
         holder.textWord.setText(title);
         holder.textMeaning.setText(detail);
-        holder.llout.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.textWord.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public
             boolean onLongClick(View v) {
                 // check point do not pass getapplcation contxt  other wise it give null point exception
+                Toast.makeText(context, "cl", Toast.LENGTH_SHORT).show();
                 deleteHolder(position);
                 return true;
             }
