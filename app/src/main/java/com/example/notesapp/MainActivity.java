@@ -1,6 +1,8 @@
 package com.example.notesapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,8 +36,11 @@ class MainActivity extends AppCompatActivity {
     private static final int REQUESTCODE = 101;
     FloatingActionButton floatingActionButton;
     Button btnCreate;
+    ArrayList<Notes> arrayNotes;
     RecyclerView recyclerView;
     LinearLayout llrow;
+    public Toolbar toolbar;
+    RecycleViewAdapter recycleViewAdapter;
 
     DataBaseHelper dataBaseHelper;
 
@@ -45,6 +51,7 @@ class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initVal();
         showNotes();
+
 
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -92,13 +99,45 @@ class MainActivity extends AppCompatActivity {
                 floatingActionButton.performClick();
             }
         });
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public
+            boolean onMenuItemClick(MenuItem item) {
+                int ids= item.getItemId();
+                if (ids==R.id.share)
+                {
+                    Toast.makeText(MainActivity.this, "Share clicked", Toast.LENGTH_SHORT).show();
+                }
+                else if (ids==R.id.delete){
+                    for (int i=0;i<arrayNotes.size();i++){
+                        if (arrayNotes.get(i).isSelected()){
+                            dataBaseHelper.notesDAO().deleteNotes(new Notes(arrayNotes.get(i).getId(), arrayNotes.get(i).getWord(), arrayNotes.get(i).getMeaning()));
+
+
+                        }
+
+
+                    } showNotes();
+
+                }else {
+                    Toast.makeText(MainActivity.this, "clicked"+item.toString(), Toast.LENGTH_SHORT).show();
+
+                }
+
+
+
+                return true;
+            }
+        });
     }
     public void showNotes(){
-        ArrayList<Notes> arrayNotes = (ArrayList<Notes>) dataBaseHelper.notesDAO().getALlNotes();
+        arrayNotes = (ArrayList<Notes>) dataBaseHelper.notesDAO().getALlNotes();
+
         if (arrayNotes.size()>0){
             llrow.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setAdapter(new RecycleViewAdapter(this,arrayNotes,dataBaseHelper));
+            recycleViewAdapter =new RecycleViewAdapter(this,arrayNotes,dataBaseHelper,toolbar);
+            recyclerView.setAdapter(recycleViewAdapter);
 
         }
         else {
@@ -108,12 +147,21 @@ class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     private
     void initVal() {
         floatingActionButton = findViewById(R.id.floatingBtn);
         btnCreate = findViewById(R.id.btuCreate);
         recyclerView = findViewById(R.id.recycleview);
         llrow = findViewById(R.id.linearlayout);
+        toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.item);
+        toolbar.setEnabled(false);
+        toolbar.setTitle("Notes App");
+
+
 
         // Drawable image to bitmap
         Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.icon_pic,null);

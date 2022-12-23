@@ -14,6 +14,9 @@ class Notes {
     private String word;
     @ColumnInfo(name = "meaning")
     private String meaning;
+    @ColumnInfo(name ="boolean" )
+    private boolean isSelected=false;
+
     public Notes(int id ,String word,String meaning){
         this.word = word;
         this.id = id;
@@ -23,6 +26,16 @@ class Notes {
     public Notes(String word,String meaning){
         this.word = word;
         this.meaning = meaning;
+    }
+
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+
+    public boolean isSelected() {
+        return isSelected;
     }
 
     public

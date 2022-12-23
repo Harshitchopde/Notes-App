@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/share"
+        android:title="Share"
+        app:showAsAction="ifRoom"
+
+        android:icon="@drawable/ic_baseline_share_24"/>
+    <item android:id="@+id/upload"
+        android:title="Upload"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_drive_folder_upload_24"/>
+    <item android:id="@+id/delete"
+        android:title="Delete"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_delete_24"/>
+    <item android:id="@+id/uodate"
+        app:showAsAction="ifRoom"
+        android:title="Update"/>
+</menu>

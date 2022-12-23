@@ -6,8 +6,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -28,11 +32,13 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
     DataBaseHelper dataBaseHelper;
     Context context;
     ArrayList<Notes> arrayNotes;
+    Toolbar toolbar;
 
-    RecycleViewAdapter(Context context, ArrayList<Notes> arrayNotes, DataBaseHelper dataBaseHelper) {
+    RecycleViewAdapter(Context context, ArrayList<Notes> arrayNotes, DataBaseHelper dataBaseHelper, Toolbar toolbar) {
         this.arrayNotes = arrayNotes;
         this.context = context;
         this.dataBaseHelper = dataBaseHelper;
+        this.toolbar = toolbar;
 
     }
 
@@ -48,17 +54,27 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
     public
     void onBindViewHolder(@NonNull RecycleViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // set text to the cotent to bind the data to the layout
+
+
+        final Notes model = arrayNotes.get(position);
+
         String title = arrayNotes.get(position).getWord();
         String detail = arrayNotes.get(position).getMeaning();
         holder.textWord.setText(title);
         holder.textMeaning.setText(detail);
         holder.textWord.setOnLongClickListener(new View.OnLongClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public
             boolean onLongClick(View v) {
                 // check point do not pass getapplcation contxt  other wise it give null point exception
-                Toast.makeText(context, "cl", Toast.LENGTH_SHORT).show();
-                deleteHolder(position);
+//                Toast.makeText(context, "cl", Toast.LENGTH_SHORT).show();
+//                deleteHolder(position);
+
+                model.setSelected(!model.isSelected());
+                holder.llout.setBackgroundColor(model.isSelected() ?Color.LTGRAY : Color.WHITE);
+
+
                 return true;
             }
 
@@ -77,14 +93,14 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
 //            public
 //            void onClick(View v) {
 //
-//                update(position);
+//                update(position); v
 //            }
 //        });
         holder.ishare.setOnClickListener(new View.OnClickListener() {
             @Override
             public
             void onClick(View v) {
-//                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
                 Intent ishared = new Intent(Intent.ACTION_SEND);
                 ishared.setType("text/plain")
                         .putExtra(Intent.EXTRA_TEXT,""+title+"\n"+detail);
@@ -135,6 +151,7 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
                 .setNegativeButton("No", null)
                 .show();
     }
+
 
     public
     void update(int pos) {

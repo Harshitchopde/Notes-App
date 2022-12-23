@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NotesApp</string>
+    <string name="purpl">#FF000000</string>
 </resources>
