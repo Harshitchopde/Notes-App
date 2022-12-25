@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -61,7 +62,17 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
         String title = arrayNotes.get(position).getWord();
         String detail = arrayNotes.get(position).getMeaning();
         holder.textWord.setText(title);
-        holder.textMeaning.setText(detail);
+        holder.textMeaning.setText(detail+position);
+//        holder.llout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public
+//            void onClick(View v) {
+//
+////
+//            }
+//        });
+        holder.llout.setBackgroundColor(Color.WHITE);
+
         holder.textWord.setOnLongClickListener(new View.OnLongClickListener() {
             @SuppressLint("ResourceAsColor")
             @Override
@@ -72,6 +83,9 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
 //                deleteHolder(position);
 
                 model.setSelected(!model.isSelected());
+                // below is for custom colour
+//                holder.llout.setBackgroundColor(model.isSelected() ? ContextCompat.getColor(context,R.color.purple_500) : Color.WHITE);
+
                 holder.llout.setBackgroundColor(model.isSelected() ?Color.LTGRAY : Color.WHITE);
 
 
@@ -122,6 +136,7 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
         TextView textWord, textMeaning;
         LinearLayout llout;
         AppCompatImageButton ishare;
+        RecyclerView recyclerView;
 
         public
         ViewHolder(@NonNull View itemView) {
@@ -129,6 +144,7 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
             textWord = itemView.findViewById(R.id.wordid);
             textMeaning = itemView.findViewById(R.id.meaningid);
             llout = itemView.findViewById(R.id.llrow);
+            recyclerView = itemView.findViewById(R.id.recycleview);
             ishare = itemView.findViewById(R.id.shareBTN);
 
         }

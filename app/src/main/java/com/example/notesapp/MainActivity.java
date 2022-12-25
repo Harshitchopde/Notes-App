@@ -7,17 +7,22 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +39,7 @@ class MainActivity extends AppCompatActivity {
     private static final String CHHANEL = "My Channel";
     private static final int ID = 100;
     private static final int REQUESTCODE = 101;
+    private static final String TAG = "from";
     FloatingActionButton floatingActionButton;
     Button btnCreate;
     ArrayList<Notes> arrayNotes;
@@ -43,6 +49,7 @@ class MainActivity extends AppCompatActivity {
     RecycleViewAdapter recycleViewAdapter;
 
     DataBaseHelper dataBaseHelper;
+
 
     @Override
     protected
@@ -109,17 +116,12 @@ class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Share clicked", Toast.LENGTH_SHORT).show();
                 }
                 else if (ids==R.id.delete){
-                    for (int i=0;i<arrayNotes.size();i++){
-                        if (arrayNotes.get(i).isSelected()){
-                            dataBaseHelper.notesDAO().deleteNotes(new Notes(arrayNotes.get(i).getId(), arrayNotes.get(i).getWord(), arrayNotes.get(i).getMeaning()));
+                    deleteOption();
 
-
-                        }
-
-
-                    } showNotes();
-
-                }else {
+                }else if (ids==R.id.cancel){
+                    cancel();
+                }
+                else {
                     Toast.makeText(MainActivity.this, "clicked"+item.toString(), Toast.LENGTH_SHORT).show();
 
                 }
@@ -130,6 +132,36 @@ class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private
+    void cancel() {
+        recycleViewAdapter.notifyDataSetChanged();
+
+    }
+
+    private
+    void deleteOption() {
+        AlertDialog alertDia = new AlertDialog.Builder(this)
+                .setTitle("Delete")
+                .setMessage("Are you sure want to delete")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public
+                    void onClick(DialogInterface dialog, int which) {
+                        for (int i=0;i<arrayNotes.size();i++){
+                            if (arrayNotes.get(i).isSelected()){
+                                dataBaseHelper.notesDAO().deleteNotes(new Notes(arrayNotes.get(i).getId(), arrayNotes.get(i).getWord(), arrayNotes.get(i).getMeaning()));
+                            }
+                        }
+                        showNotes();
+
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
     public void showNotes(){
         arrayNotes = (ArrayList<Notes>) dataBaseHelper.notesDAO().getALlNotes();
 
@@ -156,6 +188,7 @@ class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycleview);
         llrow = findViewById(R.id.linearlayout);
         toolbar = findViewById(R.id.toolbar);
+
 //        setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.item);
         toolbar.setEnabled(false);

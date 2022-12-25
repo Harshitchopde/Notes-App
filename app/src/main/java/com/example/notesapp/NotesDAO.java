@@ -12,6 +12,8 @@ public
 interface NotesDAO {
     @Query("select * from Notes")
     List<Notes> getALlNotes();
+    @Query("SELECT * FROM Notes WHERE boolean = :bool GROUP BY id")
+    public List<Notes> selected(boolean bool);
     @Insert
     void addNotes(Notes notes);
     @Delete
