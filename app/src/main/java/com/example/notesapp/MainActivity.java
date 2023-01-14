@@ -197,10 +197,10 @@ class MainActivity extends AppCompatActivity {
 
 
         // Drawable image to bitmap
-        Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.icon_pic,null);
-        BitmapDrawable bm = (BitmapDrawable) drawable;
-        assert bm != null;
-        Bitmap bitmap = bm.getBitmap();
+//        Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.icon_pic,null);
+//        BitmapDrawable bm = (BitmapDrawable) drawable;
+//
+//        Bitmap bitmap = bm.getBitmap();
         Intent iNotify = new Intent(getApplicationContext(),MainActivity.class);
         //below is do if intent activitu is already is in the stack than it will clear the top all activity
         iNotify.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // i made that setFlags that is why my app crash
@@ -213,7 +213,7 @@ class MainActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
              notification =new Notification.Builder(this)
                     .setContentText("New Message")
-                            .setLargeIcon(bitmap)
+//                            .setLargeIcon(bitmap)
                      .setContentIntent(pi)
                                     .setSmallIcon(R.drawable.icon_pic)
                                             .setSubText("Create new notes")
@@ -225,7 +225,7 @@ class MainActivity extends AppCompatActivity {
         else {
             notification =new Notification.Builder(this)
                     .setContentText("New Message")
-                    .setLargeIcon(bitmap)
+//                    .setLargeIcon(bitmap)
                     .setSmallIcon(R.drawable.icon_pic)
                     .setContentIntent(pi)
                     .setSubText("Create new notes")

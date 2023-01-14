@@ -2,9 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
-    app:cardElevation="7dp"
+    app:cardElevation="5dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 
@@ -15,7 +15,7 @@
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:background="#FA7443"
+            android:background="@color/orange"
             android:layout_height="5dp"/>
 
         <RelativeLayout
@@ -25,13 +25,13 @@
 
             <TextView
                 android:id="@+id/wordid"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
 
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:text="Hello"
-                android:textSize="24dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
 
                 />
@@ -43,6 +43,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_alignRight="@+id/wordid"
+
                 android:backgroundTint="@color/white"
                 android:src="@drawable/ic_baseline_share_24" />
 
@@ -54,11 +56,13 @@
 
             android:id="@+id/meaningid"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:maxHeight="300dp"
+            android:scrollbars="vertical"
             android:text="hello meaning"
-            android:textSize="20dp" />
+
+            android:textSize="16sp" />
 
 
     </LinearLayout>

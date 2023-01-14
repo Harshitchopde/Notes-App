@@ -17,24 +17,28 @@
            android:padding="10dp"
            />
        <EditText
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:id="@+id/wordIP"
            android:hint="Enter the word "
            android:layout_marginLeft="20dp"
+           android:layout_marginRight="20dp"
            android:layout_marginTop="10dp"
            android:inputType="textPersonName"
-           android:paddingRight="160dp"
+
 
            />
+<!--       android:paddingRight="160dp"-->
        <EditText
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:id="@+id/meaningIP"
            android:hint="Enter the meaning"
            android:inputType="textPersonName"
+           android:layout_marginRight="20dp"
+
            android:layout_marginTop="10dp"
-           android:paddingRight="160dp"
+
            android:layout_marginLeft="20dp"
            />
        <Button

@@ -94,14 +94,16 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
 
 
         });
-        holder.textMeaning.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public
-            void onClick(View v) {
-                
-                update(position);
-            }
-        });
+
+        // Upate prompt when click the text meaning
+//        holder.textMeaning.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public
+//            void onClick(View v) {
+//
+//                update(position);
+//            }
+//        });
 //        holder.textWord.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public
