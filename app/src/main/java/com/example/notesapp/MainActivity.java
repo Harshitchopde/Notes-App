@@ -49,10 +49,8 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     FloatingActionButton floatingActionButton;
-    Button btnCreate;
     ArrayList<Notes> arrayNotes;
-    RecyclerView recyclerView;
-    LinearLayout llrow;
+
     public Toolbar toolbar;
     RecycleViewAdapter recycleViewAdapter;
 
@@ -209,9 +207,7 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private
     void initVal() {
 //        floatingActionButton = findViewById(R.id.floatingBtn);
-        btnCreate = findViewById(R.id.btuCreate);
-        recyclerView = findViewById(R.id.recycleview);
-        llrow = findViewById(R.id.linearlayout);
+
         toolbar = findViewById(R.id.toolbar);
 
 //        setSupportActionBar(toolbar);
@@ -221,46 +217,46 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
         toolbar.setTitle("Notes App");
 
 
-
         // Drawable image to bitmap
 //        Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.icon_pic,null);
 //        BitmapDrawable bm = (BitmapDrawable) drawable;
 //
 //        Bitmap bitmap = bm.getBitmap();
-        Intent iNotify = new Intent(getApplicationContext(),MainActivity.class);
-        //below is do if intent activitu is already is in the stack than it will clear the top all activity
-        iNotify.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // i made that setFlags that is why my app crash
-        // Create pending intent
-        PendingIntent pi =PendingIntent.getActivity(this,REQUESTCODE,iNotify,PendingIntent.FLAG_IMMUTABLE);
-
-        // Show the notification on your app when your app is opened
-        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        Notification notification;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-             notification =new Notification.Builder(this)
-                    .setContentText("New Message")
-//                            .setLargeIcon(bitmap)
-                     .setContentIntent(pi)
-                                    .setSmallIcon(R.drawable.icon_pic)
-                                            .setSubText("Create new notes")
-                                                    .setChannelId(CHHANEL)
-                    .build();
-            nm.createNotificationChannel(new NotificationChannel(CHHANEL,"My app",NotificationManager.IMPORTANCE_HIGH));
-            
-        }
-        else {
-            notification =new Notification.Builder(this)
-                    .setContentText("New Message")
-//                    .setLargeIcon(bitmap)
-                    .setSmallIcon(R.drawable.icon_pic)
-                    .setContentIntent(pi)
-                    .setSubText("Create new notes")
-                    .build();
-
-
-        }
-        nm.notify(ID,notification);
-
+        {
+//        Intent iNotify = new Intent(getApplicationContext(),MainActivity.class);
+//        //below is do if intent activitu is already is in the stack than it will clear the top all activity
+//        iNotify.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // i made that setFlags that is why my app crash
+//        // Create pending intent
+//        PendingIntent pi =PendingIntent.getActivity(this,REQUESTCODE,iNotify,PendingIntent.FLAG_IMMUTABLE);
+//
+//        // Show the notification on your app when your app is opened
+//        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        Notification notification;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//             notification =new Notification.Builder(this)
+//                    .setContentText("New Message")
+////                            .setLargeIcon(bitmap)
+//                     .setContentIntent(pi)
+//                                    .setSmallIcon(R.drawable.icon_pic)
+//                                            .setSubText("Create new notes")
+//                                                    .setChannelId(CHHANEL)
+//                    .build();
+//            nm.createNotificationChannel(new NotificationChannel(CHHANEL,"My app",NotificationManager.IMPORTANCE_HIGH));
+//
+//        }
+//        else {
+//            notification =new Notification.Builder(this)
+//                    .setContentText("New Message")
+////                    .setLargeIcon(bitmap)
+//                    .setSmallIcon(R.drawable.icon_pic)
+//                    .setContentIntent(pi)
+//                    .setSubText("Create new notes")
+//                    .build();
+//
+//
+//        }
+//        nm.notify(ID,notification);
+    }
 
         // step 1 to set up layout on your recycleView
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
