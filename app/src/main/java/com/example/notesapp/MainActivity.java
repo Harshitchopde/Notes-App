@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -35,11 +36,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public
-class MainActivity extends AppCompatActivity {
+class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String CHHANEL = "My Channel";
     private static final int ID = 100;
     private static final int REQUESTCODE = 101;
     private static final String TAG = "from";
+    // fab icon
+    FloatingActionButton FabMain,Fab1,Fab2,Fab3;
+    Float translationY = 100f;
+    Boolean isMenuOpen = false;
+    OvershootInterpolator interpolator = new OvershootInterpolator();
+
+
     FloatingActionButton floatingActionButton;
     Button btnCreate;
     ArrayList<Notes> arrayNotes;
@@ -61,7 +69,7 @@ class MainActivity extends AppCompatActivity {
 
 
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public
             void onClick(View v) {
@@ -99,13 +107,13 @@ class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public
-            void onClick(View v) {
-                floatingActionButton.performClick();
-            }
-        });
+//        btnCreate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public
+//            void onClick(View v) {
+////                floatingActionButton.performClick();
+//            }
+//        });
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public
@@ -139,7 +147,24 @@ class MainActivity extends AppCompatActivity {
         recycleViewAdapter.notifyDataSetChanged();
 
     }
+    private void initFabmenu(){
+        FabMain = findViewById(R.id.fabMain);
+        Fab1 = findViewById(R.id.fabone);
+        Fab2 = findViewById(R.id.fabtwo);
+        Fab3 = findViewById(R.id.fabthree);
+        Fab1.setAlpha(0f);
+        Fab2.setAlpha(0f);
+        Fab3.setAlpha(0f);
 
+        Fab1.setTranslationY(translationY);
+        Fab2.setTranslationY(translationY);
+        Fab3.setTranslationY(translationY);
+
+        Fab1.setOnClickListener(this);
+        FabMain.setOnClickListener(this);
+        Fab2.setOnClickListener(this);
+        Fab3.setOnClickListener(this);
+    }
     private
     void deleteOption() {
         AlertDialog alertDia = new AlertDialog.Builder(this)
@@ -183,7 +208,7 @@ class MainActivity extends AppCompatActivity {
 
     private
     void initVal() {
-        floatingActionButton = findViewById(R.id.floatingBtn);
+//        floatingActionButton = findViewById(R.id.floatingBtn);
         btnCreate = findViewById(R.id.btuCreate);
         recyclerView = findViewById(R.id.recycleview);
         llrow = findViewById(R.id.linearlayout);
@@ -191,6 +216,7 @@ class MainActivity extends AppCompatActivity {
 
 //        setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.item);
+        initFabmenu();
         toolbar.setEnabled(false);
         toolbar.setTitle("Notes App");
 
@@ -240,6 +266,54 @@ class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         // error is geting because .getDB is pass their and it shoud be of public
         dataBaseHelper = dataBaseHelper.getDB(this);
+
+
+    }
+
+    private void openMenu(){
+        isMenuOpen = !isMenuOpen;
+        FabMain.animate().setInterpolator(interpolator).rotation(3f).setDuration(300).start();
+        Fab1.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+        Fab2.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+        Fab3.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+
+
+    }
+    private void closeMenu(){
+        isMenuOpen = !isMenuOpen;
+        FabMain.animate().setInterpolator(interpolator).rotation(60f).setDuration(300).start();
+        Fab1.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+        Fab2.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+        Fab3.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+
+
+
+    }
+
+    @Override
+    public
+    void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fabMain:
+                Log.i(TAG, "onClick: Fabmenu");
+                if (isMenuOpen){
+                    closeMenu();
+                }else {
+                    openMenu();
+
+                }
+                break;
+
+            case R.id.fabone:
+                Log.i(TAG, "onClick: fabone is clicked");
+                break;
+            case R.id.fabtwo:
+                Log.i(TAG, "onClick: fabtwo is clicked");
+                break;
+            case R.id.fabthree:
+                Log.i(TAG, "onClick: fabthree is clicked");
+                break;
+        }
 
 
     }

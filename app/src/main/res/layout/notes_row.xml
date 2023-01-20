@@ -31,6 +31,7 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:text="Hello"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
 
@@ -58,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:textColor="@color/black"
             android:maxHeight="300dp"
             android:scrollbars="vertical"
             android:text="hello meaning"
