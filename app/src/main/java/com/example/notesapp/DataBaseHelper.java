@@ -24,5 +24,6 @@ public
         }
         return instance;
     }
+    // below is to provide abstraction layer to access interface DAO
 public abstract NotesDAO notesDAO();
 }

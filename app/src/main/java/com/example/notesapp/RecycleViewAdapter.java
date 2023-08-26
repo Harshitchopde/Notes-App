@@ -35,6 +35,7 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
     ArrayList<Notes> arrayNotes;
     Toolbar toolbar;
 
+
     RecycleViewAdapter(Context context, ArrayList<Notes> arrayNotes, DataBaseHelper dataBaseHelper, Toolbar toolbar) {
         this.arrayNotes = arrayNotes;
         this.context = context;
@@ -55,14 +56,14 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
     public
     void onBindViewHolder(@NonNull RecycleViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // set text to the cotent to bind the data to the layout
+        int n = arrayNotes.size()-1;
 
+        final Notes model = arrayNotes.get(n-position);
 
-        final Notes model = arrayNotes.get(position);
-
-        String title = arrayNotes.get(position).getWord();
-        String detail = arrayNotes.get(position).getMeaning();
+        String title = model.getWord();
+        String detail = model.getMeaning();
         holder.textWord.setText(title);
-        holder.textMeaning.setText(detail+position);
+        holder.textMeaning.setText(detail);
 //        holder.llout.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public
@@ -87,6 +88,7 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
 //                holder.llout.setBackgroundColor(model.isSelected() ? ContextCompat.getColor(context,R.color.purple_500) : Color.WHITE);
 
                 holder.llout.setBackgroundColor(model.isSelected() ?Color.LTGRAY : Color.WHITE);
+                holder.shareBTN.setBackgroundColor(model.isSelected() ?Color.LTGRAY : Color.WHITE);
 
 
                 return true;
@@ -95,23 +97,7 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
 
         });
 
-        // Upate prompt when click the text meaning
-//        holder.textMeaning.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public
-//            void onClick(View v) {
-//
-//                update(position);
-//            }
-//        });
-//        holder.textWord.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public
-//            void onClick(View v) {
-//
-//                update(position); v
-//            }
-//        });
+
         holder.ishare.setOnClickListener(new View.OnClickListener() {
             @Override
             public
@@ -139,6 +125,7 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
         LinearLayout llout;
         AppCompatImageButton ishare;
         RecyclerView recyclerView;
+        AppCompatImageButton shareBTN;
 
         public
         ViewHolder(@NonNull View itemView) {
@@ -146,6 +133,7 @@ class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHol
             textWord = itemView.findViewById(R.id.wordid);
             textMeaning = itemView.findViewById(R.id.meaningid);
             llout = itemView.findViewById(R.id.llrow);
+            shareBTN = itemView.findViewById(R.id.shareBTN);
             recyclerView = itemView.findViewById(R.id.recycleview);
             ishare = itemView.findViewById(R.id.shareBTN);
 

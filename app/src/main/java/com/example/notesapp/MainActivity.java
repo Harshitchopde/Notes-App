@@ -36,19 +36,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public
-class MainActivity extends AppCompatActivity implements View.OnClickListener{
+class MainActivity extends AppCompatActivity {
     private static final String CHHANEL = "My Channel";
     private static final int ID = 100;
     private static final int REQUESTCODE = 101;
     private static final String TAG = "from";
     // fab icon
-    FloatingActionButton FabMain,Fab1,Fab2,Fab3;
-    Float translationY = 100f;
-    Boolean isMenuOpen = false;
+    FloatingActionButton FabMain;
+
     OvershootInterpolator interpolator = new OvershootInterpolator();
 
 
-    FloatingActionButton floatingActionButton;
     Button btnCreate;
     ArrayList<Notes> arrayNotes;
     RecyclerView recyclerView;
@@ -60,19 +58,16 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     @Override
-    protected
-    void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initVal();
         showNotes();
 
 
-
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public
-            void onClick(View v) {
+            public void onClick(View v) {
                 // not pass the get application context
                 Dialog dialog = new Dialog(MainActivity.this);
                 dialog.setContentView(R.layout.adding_update);
@@ -81,18 +76,15 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
                 Button btnAdd = dialog.findViewById(R.id.addingBtn);
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public
-                    void onClick(View v) {
+                    public void onClick(View v) {
                         String word = wordl.getText().toString();
                         String meaning = meaningl.getText().toString();
-                        if(word.equals("")){
+                        if (word.equals("")) {
                             wordl.setError("Title can't be empty");
                             Toast.makeText(MainActivity.this, "hii", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (TextUtils.isEmpty(meaning)){
+                        } else if (TextUtils.isEmpty(meaning)) {
                             meaningl.setError("Content can not be empty");
-                        }
-                        else {
+                        } else {
 
                             Toast.makeText(MainActivity.this, "hi", Toast.LENGTH_SHORT).show();
 
@@ -107,6 +99,10 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
                 dialog.show();
             }
         });
+
+        FabMain.setOnClickListener(v -> {
+            btnCreate.performClick();
+        });
 //        btnCreate.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public
@@ -116,24 +112,19 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
 //        });
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public
-            boolean onMenuItemClick(MenuItem item) {
-                int ids= item.getItemId();
-                if (ids==R.id.share)
-                {
+            public boolean onMenuItemClick(MenuItem item) {
+                int ids = item.getItemId();
+                if (ids == R.id.share) {
                     Toast.makeText(MainActivity.this, "Share clicked", Toast.LENGTH_SHORT).show();
-                }
-                else if (ids==R.id.delete){
+                } else if (ids == R.id.delete) {
                     deleteOption();
 
-                }else if (ids==R.id.cancel){
+                } else if (ids == R.id.cancel) {
                     cancel();
-                }
-                else {
-                    Toast.makeText(MainActivity.this, "clicked"+item.toString(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "clicked" + item.toString(), Toast.LENGTH_SHORT).show();
 
                 }
-
 
 
                 return true;
@@ -142,40 +133,20 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private
-    void cancel() {
+    private void cancel() {
         recycleViewAdapter.notifyDataSetChanged();
 
     }
-    private void initFabmenu(){
-        FabMain = findViewById(R.id.fabMain);
-        Fab1 = findViewById(R.id.fabone);
-        Fab2 = findViewById(R.id.fabtwo);
-        Fab3 = findViewById(R.id.fabthree);
-        Fab1.setAlpha(0f);
-        Fab2.setAlpha(0f);
-        Fab3.setAlpha(0f);
 
-        Fab1.setTranslationY(translationY);
-        Fab2.setTranslationY(translationY);
-        Fab3.setTranslationY(translationY);
-
-        Fab1.setOnClickListener(this);
-        FabMain.setOnClickListener(this);
-        Fab2.setOnClickListener(this);
-        Fab3.setOnClickListener(this);
-    }
-    private
-    void deleteOption() {
+    private void deleteOption() {
         AlertDialog alertDia = new AlertDialog.Builder(this)
                 .setTitle("Delete")
                 .setMessage("Are you sure want to delete")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public
-                    void onClick(DialogInterface dialog, int which) {
-                        for (int i=0;i<arrayNotes.size();i++){
-                            if (arrayNotes.get(i).isSelected()){
+                    public void onClick(DialogInterface dialog, int which) {
+                        for (int i = 0; i < arrayNotes.size(); i++) {
+                            if (arrayNotes.get(i).isSelected()) {
                                 dataBaseHelper.notesDAO().deleteNotes(new Notes(arrayNotes.get(i).getId(), arrayNotes.get(i).getWord(), arrayNotes.get(i).getMeaning()));
                             }
                         }
@@ -187,17 +158,16 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
                 .show();
     }
 
-    public void showNotes(){
+    public void showNotes() {
         arrayNotes = (ArrayList<Notes>) dataBaseHelper.notesDAO().getALlNotes();
 
-        if (arrayNotes.size()>0){
+        if (arrayNotes.size() > 0) {
             llrow.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            recycleViewAdapter =new RecycleViewAdapter(this,arrayNotes,dataBaseHelper,toolbar);
+            recycleViewAdapter = new RecycleViewAdapter(this, arrayNotes, dataBaseHelper, toolbar);
             recyclerView.setAdapter(recycleViewAdapter);
 
-        }
-        else {
+        } else {
             llrow.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
 
@@ -205,21 +175,18 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
     }
 
 
-
-    private
-    void initVal() {
+    private void initVal() {
 //        floatingActionButton = findViewById(R.id.floatingBtn);
         btnCreate = findViewById(R.id.btuCreate);
         recyclerView = findViewById(R.id.recycleview);
         llrow = findViewById(R.id.linearlayout);
         toolbar = findViewById(R.id.toolbar);
-
+        FabMain = findViewById(R.id.fabMain);
 //        setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.item);
-        initFabmenu();
+//        initFabmenu();
         toolbar.setEnabled(false);
         toolbar.setTitle("Notes App");
-
 
 
         // Drawable image to bitmap
@@ -227,29 +194,28 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
 //        BitmapDrawable bm = (BitmapDrawable) drawable;
 //
 //        Bitmap bitmap = bm.getBitmap();
-        Intent iNotify = new Intent(getApplicationContext(),MainActivity.class);
+        Intent iNotify = new Intent(getApplicationContext(), MainActivity.class);
         //below is do if intent activitu is already is in the stack than it will clear the top all activity
         iNotify.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // i made that setFlags that is why my app crash
         // Create pending intent
-        PendingIntent pi =PendingIntent.getActivity(this,REQUESTCODE,iNotify,PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pi = PendingIntent.getActivity(this, REQUESTCODE, iNotify, PendingIntent.FLAG_IMMUTABLE);
 
         // Show the notification on your app when your app is opened
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification notification;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-             notification =new Notification.Builder(this)
+            notification = new Notification.Builder(this)
                     .setContentText("New Message")
 //                            .setLargeIcon(bitmap)
-                     .setContentIntent(pi)
-                                    .setSmallIcon(R.drawable.icon_pic)
-                                            .setSubText("Create new notes")
-                                                    .setChannelId(CHHANEL)
+                    .setContentIntent(pi)
+                    .setSmallIcon(R.drawable.icon_pic)
+                    .setSubText("Create new notes")
+                    .setChannelId(CHHANEL)
                     .build();
-            nm.createNotificationChannel(new NotificationChannel(CHHANEL,"My app",NotificationManager.IMPORTANCE_HIGH));
-            
-        }
-        else {
-            notification =new Notification.Builder(this)
+            nm.createNotificationChannel(new NotificationChannel(CHHANEL, "My app", NotificationManager.IMPORTANCE_HIGH));
+
+        } else {
+            notification = new Notification.Builder(this)
                     .setContentText("New Message")
 //                    .setLargeIcon(bitmap)
                     .setSmallIcon(R.drawable.icon_pic)
@@ -259,62 +225,36 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 
         }
-        nm.notify(ID,notification);
+        nm.notify(ID, notification);
 
 
         // step 1 to set up layout on your recycleView
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         // error is geting because .getDB is pass their and it shoud be of public
         dataBaseHelper = dataBaseHelper.getDB(this);
 
 
     }
 
-    private void openMenu(){
-        isMenuOpen = !isMenuOpen;
-        FabMain.animate().setInterpolator(interpolator).rotation(3f).setDuration(300).start();
-        Fab1.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
-        Fab2.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
-        Fab3.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+//    private void openMenu(){
+//        isMenuOpen = !isMenuOpen;
+//        FabMain.animate().setInterpolator(interpolator).rotation(3f).setDuration(300).start();
+//        Fab1.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+//        Fab2.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+//        Fab3.animate().translationY(0f).alpha(1f).setInterpolator(interpolator).setDuration(300).start();
+//
+//
+//    }
+//    private void closeMenu(){
+//        isMenuOpen = !isMenuOpen;
+//        FabMain.animate().setInterpolator(interpolator).rotation(60f).setDuration(300).start();
+//        Fab1.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+//        Fab2.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+//        Fab3.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
+//
+//
+//
+//    }
 
 
-    }
-    private void closeMenu(){
-        isMenuOpen = !isMenuOpen;
-        FabMain.animate().setInterpolator(interpolator).rotation(60f).setDuration(300).start();
-        Fab1.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
-        Fab2.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
-        Fab3.animate().translationY(translationY).alpha(0f).setInterpolator(interpolator).setDuration(300).start();
-
-
-
-    }
-
-    @Override
-    public
-    void onClick(View v) {
-        switch (v.getId()){
-            case R.id.fabMain:
-                Log.i(TAG, "onClick: Fabmenu");
-                if (isMenuOpen){
-                    closeMenu();
-                }else {
-                    openMenu();
-
-                }
-                break;
-
-            case R.id.fabone:
-                Log.i(TAG, "onClick: fabone is clicked");
-                break;
-            case R.id.fabtwo:
-                Log.i(TAG, "onClick: fabtwo is clicked");
-                break;
-            case R.id.fabthree:
-                Log.i(TAG, "onClick: fabthree is clicked");
-                break;
-        }
-
-
-    }
 }
